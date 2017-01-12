@@ -2,27 +2,28 @@
 
 Prints system information in one report-screen.
 It would be very useful to display at login via SSH
+
 Reports:
-* DATE: Current date and time
-* CPU: CPU model
-* #CPU: CPU cores count
-* LA: System load averages for the past 1, 5, and 15 minutes
-* TEMP: CPU temterature
-* MEM: Memory usage: total, free, cache, available
-* SWP: Swap usage: total, free
-* ARCH: CPU architecture (machine hardware name)
-* KERN: kernel release
-* OS: LSB (Linux Standard Base) and distribution-specific information
-* HOST: Show the system's host name
-* UP: Tell how long the system has been running
-* DF: Displays the amount of disk space available on the mounted filesystems
-* NET: Display all interfaces which are currently available and IP addresses
-* WHO: Show who is logged on
-
-
+-------------
+* **DATE**: Current date and time
+* **CPU**: CPU model
+* **#CPU**: CPU cores count
+* **LA**: System load averages for the past 1, 5, and 15 minutes
+* **TEMP**: CPU temterature
+* **MEM**: Memory usage: total, free, cache, available
+* **SWP**: Swap usage: total, free
+* **ARCH**: CPU architecture (machine hardware name)
+* **KERN**: kernel release
+* **OS**: LSB (Linux Standard Base) and distribution-specific information
+* **HOST**: Show the system's host name
+* **UP**: Tell how long the system has been running
+* **DF**: Displays the amount of disk space available on the mounted filesystems
+* **NET**: Display all interfaces which are currently available and IP addresses
+* **WHO**: Show who is logged on
 
 Example:
-
+-------------
+```
   date | четвер, 12 січня 2017 20:36:04 +0200 
 
   CPU  | ARMv7 Processor rev 4 (v7l) 
@@ -49,3 +50,22 @@ Example:
   NET  | wlan0     
 
   WHO  | rt       pts/0        2017-01-12 20:36 (192.168.120.100) 
+```
+
+Installation:
+-------------
+1. Install additional packages (Debian/Ubuntu):
+```bash
+sudo apt install lm-sensors pydf bc
+```
+
+2. Copy man file **systeminfo** to /bin and make it executable
+```bash
+sudo cp ./systeminfo /bin/systeminfo
+sudo chmod +x /bin/systeminfo
+```
+
+3. Add to the end of **~/.profile** 
+```bash
+echo "/bin/systeminfo" >> ~/.profile
+```
