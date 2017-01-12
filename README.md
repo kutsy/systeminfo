@@ -56,7 +56,15 @@ Installation:
 -------------
 Install additional packages (Debian/Ubuntu):
 ```bash
-sudo apt-get install lm-sensors pydf bc
+sudo apt-get install pydf bc
+```
+> For displaying temperature for Debian/Ubuntu also you need to install package **lm-sensors**:
+```bash
+sudo apt-get install lm-sensors
+```
+> For Raspbian you need to add your user to groups **audio** and **video**
+```bash
+sudo adduser <user> audio && sudo adduser <user> video 
 ```
 
 Copy main file **systeminfo** to **/bin** folder and make it executable
