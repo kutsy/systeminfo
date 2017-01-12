@@ -13,13 +13,13 @@ Reports:
 * **MEM**: Memory usage: total, free, cache, available
 * **SWP**: Swap usage: total, free
 * **ARCH**: CPU architecture (machine hardware name)
-* **KERN**: kernel release
+* **KERN**: Kernel release
 * **OS**: LSB (Linux Standard Base) and distribution-specific information
-* **HOST**: Show the system's host name
-* **UP**: Tell how long the system has been running
+* **HOST**: System's host name
+* **UP**: How long the system has been running
 * **DF**: Displays the amount of disk space available on the mounted filesystems
-* **NET**: Display all interfaces which are currently available and IP addresses
-* **WHO**: Show who is logged on
+* **NET**: Displays all interfaces which are currently available and IP addresses
+* **WHO**: Displays users who is logged on
 
 Example:
 -------------
