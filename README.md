@@ -54,16 +54,18 @@ Example:
 
 Installation:
 -------------
-1. Install additional packages (Debian/Ubuntu):
+Install additional packages (Debian/Ubuntu):
 ```bash
 sudo apt install lm-sensors pydf bc
 ```
-2. Copy man file **systeminfo** to **/bin** folder and make it executable
+
+Copy main file **systeminfo** to **/bin** folder and make it executable
 ```bash
 sudo cp ./systeminfo /bin/systeminfo
 sudo chmod +x /bin/systeminfo
 ```
-3. Add to the end of **~/.profile** file
+
+Add to the end of **~/.profile** file
 ```bash
 echo "/bin/systeminfo" >> ~/.profile
 ```
