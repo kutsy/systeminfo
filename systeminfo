@@ -139,25 +139,33 @@ echo
 ###############################################################################################################################################################
 
 # df
-df=`pydf -h --bw | grep '/'`
-printf "  DF   | %s \n" $df
+pydf="/usr/bin/pydf"
+if [ -f "$pydf" ];
+then
+    df=`$pydf -h --bw | grep '/'`
+    printf "  DF   | %s \n" $df
 
-echo
+    echo
+fi
 
 ###############################################################################################################################################################
 
 # net
-interfaces=`ifconfig -s | awk '{print $1}'`
-for interface in $interfaces; 
-do
-    if [ $interface != "Iface" ];
-    then
-        interface_addr=`ifconfig $interface | grep -i 'inet addr:' | cut -d: -f2 | awk '{print $1}'`
-        printf "  NET  | %-7s  %s \n" $interface $interface_addr
-    fi
-done
+ifconfig="/sbin/ifconfig"
+if [ -f "$ifconfig" ];
+then
+    interfaces=`$ifconfig -s | awk '{print $1}'`
+    for interface in $interfaces; 
+    do
+        if [ $interface != "Iface" ];
+        then
+            interface_addr=`$ifconfig $interface | grep -i 'inet addr:' | cut -d: -f2 | awk '{print $1}'`
+            printf "  NET  | %-7s  %s \n" $interface $interface_addr
+        fi
+    done
 
-echo
+    echo
+fi
 
 ###############################################################################################################################################################
 
