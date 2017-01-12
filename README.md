@@ -54,7 +54,7 @@ Example:
 
 Installation:
 -------------
-Install additional packages (Debian/Ubuntu):
+Install required packages (Debian/Ubuntu):
 ```bash
 sudo apt-get install pydf bc
 ```
