@@ -24,7 +24,7 @@ Reports:
 Example:
 -------------
 ```
-  date | Thu Jan 12 21:17:34 EET 2017
+  DATE | Thu Jan 12 21:17:34 EET 2017
 
   CPU  | ARMv7 Processor rev 4 (v7l) 
   #CPU | 4 
