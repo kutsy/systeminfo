@@ -24,11 +24,11 @@ Reports:
 Example:
 -------------
 ```
-  date | четвер, 12 січня 2017 20:36:04 +0200 
+  date | Thu Jan 12 21:17:34 EET 2017
 
   CPU  | ARMv7 Processor rev 4 (v7l) 
   #CPU | 4 
-  LA   | 0.00  0.00  0.00  
+  LA   | 0.50  0.30  0.10  
 
   TEMP | cpu    44.5'C 
 
