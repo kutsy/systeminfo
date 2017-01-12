@@ -56,7 +56,7 @@ Installation:
 -------------
 Install additional packages (Debian/Ubuntu):
 ```bash
-sudo apt install lm-sensors pydf bc
+sudo apt-get install lm-sensors pydf bc
 ```
 
 Copy main file **systeminfo** to **/bin** folder and make it executable
