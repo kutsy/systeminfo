@@ -82,12 +82,20 @@ fi
 # memory: total, free, available, cached
 memtotal=`grep -i "^memtotal" /proc/meminfo | awk '{print $2}'`
 memtotal=`echo "scale=1; $memtotal / 1024" | bc`
+
 memfree=`grep -i "^memfree" /proc/meminfo | awk '{print $2}'`
 memfree=`echo "scale=1; $memfree / 1024" | bc`
+
 memcached=`grep -i "^cached" /proc/meminfo | awk '{print $2}'`
 memcached=`echo "scale=1; $memcached / 1024" | bc`
+
 memavail=`grep -i "^memavailable" /proc/meminfo | awk '{print $2}'`
-memavail=`echo "scale=1; $memavail / 1024" | bc`
+if [ ! -z "$memavail" ];
+then
+    memavail=`echo "scale=1; $memavail / 1024" | bc`
+else
+    memavail="-"
+fi
 
 printf "  MEM  | tot  %+8sM | free  %+8sM | cache  %+8sM | avail  %+8sM \n" $memtotal $memfree $memcached $memavail
 
