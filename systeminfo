@@ -54,7 +54,7 @@ if [ -f "$sensors" ];
 then
     cputemp=`$sensors | grep -i '^core 0:' | awk -F ' ' '{print $3}' | head -n 1`
 
-    if [ ! -z $cputemp ];
+    if [ ! -z "$cputemp" ];
     then
         printf "  TEMP | cpu  %+8s \n" $cputemp
         echo
@@ -70,7 +70,7 @@ then
 
     cputemp=`$vcgencmd measure_temp | awk -F '=' '{print $2}'`
     
-    if [ ! -z $cputemp ];
+    if [ ! -z "$cputemp" ];
     then
         printf "  TEMP | cpu  %+8s \n" $cputemp
         echo
