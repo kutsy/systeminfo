@@ -67,9 +67,16 @@ sudo apt-get install lm-sensors
 sudo adduser <user> audio && sudo adduser <user> video 
 ```
 
-Copy main file **systeminfo** to **/bin** folder and make it executable
+Copy main file **systeminfo** to **/bin** folder
 ```bash
 sudo cp ./systeminfo /bin/systeminfo
+```
+or
+```bash
+sudo wget -O /bin/systeminfo https://raw.githubusercontent.com/kutsy/systeminfo/master/systeminfo
+```
+And make it executable
+```bash
 sudo chmod +x /bin/systeminfo
 ```
 
