@@ -178,7 +178,7 @@ echo
 pydf="/usr/bin/pydf"
 if [ -f "$pydf" ];
 then
-    df=`$pydf -h --bw | grep '/'`
+    df=`$pydf -h --bw | tail -n +2`
     printf "  DF   | %s \n" $df
     echo -en "\e[0m"
 
