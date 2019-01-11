@@ -4,8 +4,8 @@
 #
 # @author       kutsy
 # @repository   https://github.com/kutsy/systeminfo
-# @date         2017-01-12
-# @version      0.1
+# @date         2019-01-11
+# @version      0.2
 #
 ###############################################################################################################################################################
 
@@ -180,6 +180,7 @@ if [ -f "$pydf" ];
 then
     df=`$pydf -h --bw | grep '/'`
     printf "  DF   | %s \n" $df
+    echo -en "\e[0m"
 
     echo
 fi
