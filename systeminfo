@@ -4,12 +4,12 @@
 #
 # @author       kutsy
 # @repository   https://github.com/kutsy/systeminfo
-# @date         2019-01-11
-# @version      0.2
+# @date         2023-02-27
+# @version      0.3
 #
 ###############################################################################################################################################################
 
-# sudo apt install lm-sensors pydf bc
+# sudo apt install -y lm-sensors bc
 
 ###############################################################################################################################################################
 
@@ -24,41 +24,37 @@ echo
 ###############################################################################################################################################################
 
 # date
-date=`date`
-printf "  DATE | %s \n" $date
+date=$(date)
+printf "  DATE | %s \n" "$date"
 
 echo
 
 ###############################################################################################################################################################
 
 # cpu model
-cpumodel=`grep -i 'model name' /proc/cpuinfo | awk -F ': ' '{print $2}' | sort | uniq`
+cpumodel=$(grep -i 'model name' /proc/cpuinfo | awk -F ': ' '{print $2}' | sort | uniq)
 # cpu count
-cpucount=`nproc` #`grep 'processor' /proc/cpuinfo | wc -l`
+cpucount=$(nproc)
 # load average
-la1=`cat /proc/loadavg | awk -F ' ' '{print $1}'`
-la5=`cat /proc/loadavg | awk -F ' ' '{print $2}'`
-la15=`cat /proc/loadavg | awk -F ' ' '{print $3}'`
+la1=$(awk -F ' ' '{print $1}' /proc/loadavg)
+la5=$(awk -F ' ' '{print $2}' /proc/loadavg)
+la15=$(awk -F ' ' '{print $3}' /proc/loadavg)
 
-printf "  CPU  | %s \n" $cpumodel
-printf "  #CPU | %s \n" $cpucount
-printf "  LA   | %-5s %-5s %-5s \n" $la1 $la5 $la15
+printf "  CPU  | %s \n" "$cpumodel"
+printf "  #CPU | %s \n" "$cpucount"
+printf "  LA   | %-5s %-5s %-5s \n" "$la1" "$la5" "$la15"
 
 echo
 
 ###############################################################################################################################################################
 
+cputemp=""
+
 # x86/x64
 sensors="/usr/bin/sensors"
 if [ -f "$sensors" ];
 then
-    cputemp=`$sensors | grep -i '^core 0:' | awk -F ' ' '{print $3}' | head -n 1`
-
-    if [ ! -z "$cputemp" ];
-    then
-        printf "  TEMP | cpu  %+8s \n" $cputemp
-        echo
-    fi
+    cputemp=$($sensors | grep -i '^core 0:' | awk -F ' ' '{print $3}' | head -n 1)
 fi
 
 # arm
@@ -68,92 +64,92 @@ then
     # adduser <user> audio
     # adduser <user> video
 
-    cputemp=`$vcgencmd measure_temp | awk -F '=' '{print $2}'`
-    
-    if [ ! -z "$cputemp" ];
-    then
-        printf "  TEMP | cpu  %+8s \n" $cputemp
-        echo
-    fi
+    cputemp=$($vcgencmd measure_temp | awk -F '=' '{print $2}')
+fi
+
+if [ -n "$cputemp" ];
+then
+    printf "  TEMP | cpu  %+8s \n" "$cputemp"
+    echo
 fi
 
 ###############################################################################################################################################################
 
 # memory: total, free, available, cached
-memtotal=`grep -i "^memtotal" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$memtotal" ];
+memtotal=$(grep -i "^memtotal" /proc/meminfo | awk '{print $2}')
+if [ -n "$memtotal" ];
 then
-    memtotal=`echo "scale=1; $memtotal / 1024" | bc`
+    memtotal=$(echo "scale=1; $memtotal / 1024" | bc)
 else
     memtotal="-"
 fi
 
-memfree=`grep -i "^memfree" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$memfree" ];
+memfree=$(grep -i "^memfree" /proc/meminfo | awk '{print $2}')
+if [ -n "$memfree" ];
 then
-    memfree=`echo "scale=1; $memfree / 1024" | bc`
+    memfree=$(echo "scale=1; $memfree / 1024" | bc)
 else
     memfree="-"
 fi
 
-memcached=`grep -i "^cached" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$memcached" ];
+memcached=$(grep -i "^cached" /proc/meminfo | awk '{print $2}')
+if [ -n "$memcached" ];
 then
-    memcached=`echo "scale=1; $memcached / 1024" | bc`
+    memcached=$(echo "scale=1; $memcached / 1024" | bc)
 else
     memcached="-"
 fi
 
-memavail=`grep -i "^memavailable" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$memavail" ];
+memavail=$(grep -i "^memavailable" /proc/meminfo | awk '{print $2}')
+if [ -n "$memavail" ];
 then
-    memavail=`echo "scale=1; $memavail / 1024" | bc`
+    memavail=$(echo "scale=1; $memavail / 1024" | bc)
 else
     memavail="-"
 fi
 
-printf "  MEM  | tot  %+8sM | free  %+8sM | cache  %+8sM | avail  %+8sM \n" $memtotal $memfree $memcached $memavail
+printf "  MEM  | tot  %+8sM | free  %+8sM | cache  %+8sM | avail  %+8sM \n" "$memtotal" "$memfree" "$memcached" "$memavail"
 
 ###############################################################################################################################################################
 
 # swap: total, free
-swaptotal=`grep -i "^swaptotal" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$swaptotal" ];
+swaptotal=$(grep -i "^swaptotal" /proc/meminfo | awk '{print $2}')
+if [ -n "$swaptotal" ];
 then
-    swaptotal=`echo "scale=1; $swaptotal / 1024" | bc`
+    swaptotal=$(echo "scale=1; $swaptotal / 1024" | bc)
 else
     swaptotal="-"
 fi
 
-swapfree=`grep -i "^swapfree" /proc/meminfo | awk '{print $2}'`
-if [ ! -z "$swapfree" ];
+swapfree=$(grep -i "^swapfree" /proc/meminfo | awk '{print $2}')
+if [ -n "$swapfree" ];
 then
-    swapfree=`echo "scale=1; $swapfree / 1024" | bc`
+    swapfree=$(echo "scale=1; $swapfree / 1024" | bc)
 else
     swapfree="-"
 fi
 
-printf "  SWP  | tot  %+8sM | free  %+8sM \n" $swaptotal $swapfree
+printf "  SWP  | tot  %+8sM | free  %+8sM \n" "$swaptotal" "$swapfree"
 
 echo
 
 ###############################################################################################################################################################
 
 # architecture
-arch=`uname -m`
-printf "  ARCH | %s \n" $arch
+arch=$(uname -m)
+printf "  ARCH | %s \n" "$arch"
 
 # kernel version
-kern=`uname -r`
-printf "  KERN | %s \n" $kern
+kern=$(uname -r)
+printf "  KERN | %s \n" "$kern"
 
 # os version
-sys=`lsb_release -ds`
-printf "  OS   | %s \n" $sys
+sys=$(lsb_release -ds)
+printf "  OS   | %s \n" "$sys"
 
 # hostname
-hostname=`hostname`
-printf "  HOST | %s \n" $hostname
+hostname=$(hostname)
+printf "  HOST | %s \n" "$hostname"
 
 echo
 
@@ -175,15 +171,14 @@ echo
 ###############################################################################################################################################################
 
 # df
-pydf="/usr/bin/pydf"
-if [ -f "$pydf" ];
-then
-    df=`$pydf -h --bw | tail -n +2`
-    printf "  DF   | %s \n" $df
-    echo -en "\e[0m"
+df=$(df --print-type --human-readable | tail -n +2)
 
-    echo
-fi
+while read -r line;
+do
+    printf "  DF   | %s \n" "$line"
+done <<< "$df"
+
+echo
 
 ###############################################################################################################################################################
 
@@ -191,13 +186,13 @@ fi
 ifconfig="/sbin/ifconfig"
 if [ -f "$ifconfig" ];
 then
-    interfaces=`$ifconfig -s | awk '{print $1}'`
-    for interface in $interfaces; 
+    interfaces=$($ifconfig -s | awk '{print $1}')
+    for interface in $interfaces;
     do
-        if [ $interface != "Iface" ];
+        if [ "$interface" != "Iface" ];
         then
-            interface_addr=`$ifconfig $interface | grep -i 'inet addr:' | cut -d: -f2 | awk '{print $1}'`
-            printf "  NET  | %-7s  %s \n" $interface $interface_addr
+            interface_addr=$($ifconfig "$interface" | grep -i 'inet addr:' | cut -d: -f2 | awk '{print $1}')
+            printf "  NET  | %-7s  %s \n" "$interface" "$interface_addr"
         fi
     done
 
@@ -207,8 +202,8 @@ fi
 ###############################################################################################################################################################
 
 # active users
-who=`who`
-printf "  WHO  | %s \n" $who
+who=$(who)
+printf "  WHO  | %s \n" "$who"
 
 echo
 
