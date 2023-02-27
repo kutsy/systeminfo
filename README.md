@@ -56,7 +56,7 @@ Installation:
 -------------
 Install required packages (Debian/Ubuntu):
 ```bash
-sudo apt-get install pydf bc
+sudo apt-get install bc
 ```
 > For displaying temperature for Debian/Ubuntu also you need to install package **lm-sensors**:
 ```bash
