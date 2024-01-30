@@ -1,28 +1,28 @@
 # systeminfo
 
-Prints system information in one report-screen.
-It would be very useful to display at login via SSH
+## Overview
+`systeminfo` is a Bash script designed to provide a comprehensive overview of essential system information on Linux systems. This tool is particularly useful for system administrators and users who frequently connect to systems via SSH, as it presents all key information in a single, easy-to-read report. The script has been optimized for compatibility across a wide range of Linux distributions and is structured with modular functions for easy maintenance and customization.
 
-Reports:
--------------
-* **DATE**: Current date and time
-* **CPU**: CPU model
-* **#CPU**: CPU cores count
-* **LA**: System load averages for the past 1, 5, and 15 minutes
-* **TEMP**: CPU temterature
-* **MEM**: Memory usage: total, free, cache, available
-* **SWP**: Swap usage: total, free
-* **ARCH**: CPU architecture (machine hardware name)
-* **KERN**: Kernel release
-* **OS**: LSB (Linux Standard Base) and distribution-specific information
-* **HOST**: System's host name
-* **UP**: How long the system has been running
-* **DF**: Displays the amount of disk space available on the mounted filesystems
-* **NET**: Displays all interfaces which are currently available and IP addresses
-* **WHO**: Displays users who is logged on
+## Features
+The script reports the following system information:
 
-Example:
--------------
+* **DATE**: Current date and time.
+* **CPU**: CPU model.
+* **#CPU**: Number of CPU cores.
+* **LA**: System load averages for the past 1, 5, and 15 minutes.
+* **TEMP**: CPU temperature (if available).
+* **MEM**: Memory usage, including total, free, cached, and available memory.
+* **SWP**: Swap usage, including total and free swap space.
+* **ARCH**: CPU architecture (machine hardware name).
+* **KERN**: Kernel release.
+* **OS**: LSB (Linux Standard Base) and distribution-specific information.
+* **HOST**: System's host name.
+* **UP**: Uptime of the system, showing how long the system has been running.
+* **DF**: Disk space usage on mounted filesystems.
+* **NET**: Network interfaces and their IP addresses.
+* **WHO**: Users currently logged on to the system.
+
+## Example
 ```
   DATE | Thu Jan 12 21:17:34 EET 2017
 
@@ -52,35 +52,76 @@ Example:
   WHO  | rt       pts/0        2017-01-12 20:36 (192.168.120.100) 
 ```
 
-Installation:
--------------
-Install required packages (Debian/Ubuntu):
+## Installation
+
+Follow these steps to install and set up `systeminfo` on your system.
+
+### Prerequisites
+
+Depending on your Linux distribution, you may need to install certain packages to ensure full functionality of `systeminfo`.
+
+#### Debian/Ubuntu
+
+> Install `bc`, a required package for some calculations:
 ```bash
 sudo apt-get install bc
 ```
-> For displaying temperature for Debian/Ubuntu also you need to install package **lm-sensors**:
+
+> For displaying the CPU temperature, install `lm-sensors`:
 ```bash
 sudo apt-get install lm-sensors
 ```
-> For Raspbian you need to add your user to groups **audio** and **video**
+
+#### Raspbian
+
+> For Raspbian users, add your user to the **audio** and **video** groups to enable temperature readings:
 ```bash
 sudo adduser <user> audio && sudo adduser <user> video 
 ```
+Replace <user> with your actual username.
 
-Copy main file **systeminfo** to **/bin** folder
+### Installing systeminfo
+
+Copy the Script to `/bin`: This makes the script globally accessible as a command.
+
+You can either copy a local version of `systeminfo`:
 ```bash
 sudo cp ./systeminfo /bin/systeminfo
 ```
-or
+or download it directly from the repository:
 ```bash
 sudo wget -O /bin/systeminfo https://raw.githubusercontent.com/kutsy/systeminfo/master/systeminfo
 ```
-And make it executable
+
+Make the Script Executable:
 ```bash
 sudo chmod +x /bin/systeminfo
 ```
 
-Add to the end of **~/.profile** file
+### Auto-run on Login
+To have `systeminfo` automatically display information upon login:
+
+Append the script execution command to the end of your `~/.profile` file:
 ```bash
 echo "/bin/systeminfo" >> ~/.profile
 ```
+
+Now, `systeminfo` should run each time you log in, providing a quick overview of your system's status.
+
+
+## Customization
+The script is designed with modularity in mind, making it easy to customize or extend. Each section of the script (e.g., CPU information, memory usage) is encapsulated in a function. You can modify these functions or add new ones to extend the script's capabilities as per your requirements.
+
+## Compatibility
+`systeminfo` is compatible with most Linux distributions. It has been tested on popular distributions like Ubuntu, CentOS, Fedora, and Debian. The script gracefully handles variations in system commands and utilities across these distributions.
+
+## Contributions
+Contributions to `systeminfo` are welcome. 
+You can contribute by:
+
+* Reporting issues.
+* Suggesting new features or enhancements.
+* Submitting pull requests with bug fixes or new functionalities.
+
+## License
+`systeminfo` is open-source software, available under the MIT License.
